@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import StudentForm from './components/StudentForm';
