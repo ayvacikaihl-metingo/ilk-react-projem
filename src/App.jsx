@@ -1,7 +1,22 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import StudentForm from './components/StudentForm';
 
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/ogrenci-kayit" element={<StudentForm />} />
+      </Routes>
+    </Router>
+  );
+}
 // --- 1. LOGIN BİLEŞENİ ---
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false)
