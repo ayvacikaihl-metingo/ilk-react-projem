@@ -1,23 +1,47 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Bunu ekle
+import { supabase } from '../supabaseClient';
 import { UserPlus, Save, X } from 'lucide-react';
 
 const StudentForm = () => {
+  const navigate = useNavigate(); // 2. Yönlendirme fonksiyonunu tanımla
   const [student, setStudent] = useState({
     name: '',
     surname: '',
     studentNumber: '',
     grade: '',
-    branch: '', // Şube (A, B, C...)
     parentPhone: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Kaydedilen Öğrenci:", student);
-    // Burada Supabase kayıt mantığını ekleyeceğiz
-    alert("Öğrenci başarıyla sisteme eklendi!");
+    
+    try {
+      const { error } = await supabase
+        .from('students')
+        .insert([
+          { 
+            name: student.name, 
+            surname: student.surname, 
+            student_number: student.studentNumber, 
+            grade: student.grade, 
+            parent_phone: student.parentPhone 
+          }
+        ]);
+
+      if (error) throw error;
+
+      alert("Öğrenci başarıyla kaydedildi!");
+      
+      // 3. Başarılı kayıttan sonra liste sayfasına git
+      navigate('/ogrenci-listesi'); 
+
+    } catch (error) {
+      alert("Hata: " + error.message);
+    }
   };
 
+  // ... (Geri kalan form kodları aynı)
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
       <div className="flex items-center gap-3 mb-6 border-b pb-4">
